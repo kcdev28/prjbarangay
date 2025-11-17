@@ -8,6 +8,7 @@ class resident extends Model
 {
     protected $table = 'tbl_residents'; 
     public $timestamps = true;
+    const UPDATED_AT = null;
     protected $fillable = [
         'firstname',
         'middlename',

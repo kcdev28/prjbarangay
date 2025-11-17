@@ -43,7 +43,7 @@
                 </form>
 
                 <div class="register-link">
-                    Don't have an account? <a href="registerResident.blade.php">Register Now</a>
+                    Don't have an account? <a href="{{ route('register') }}">Register Now</a>
                 </div>
             </div>
         </div>
@@ -55,14 +55,12 @@
     const showPasswordCheckbox = document.getElementById('showPassword');
     const passwordInput = document.getElementById('password');
 
-    showPasswordCheckbox.addEventListener('change', function () {
+    showPasswordCheckbox.addEventListener('change', function() {
         const type = this.checked ? 'text' : 'password';
         passwordInput.setAttribute('type', type);
     });
 
-    document.getElementById('submit').addEventListener('click', function () {
+    document.getElementById('submit').addEventListener('click', function() {
         window.location.href = 'landingPage.blade.php';
     });
-
-
 </script>
