@@ -5,9 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>San Agustin E-Services</title>
-     <link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap.min.css') }}">
     <script src="{{ asset('bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-     <link rel="stylesheet" href="{{ asset('css/landingPage.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/landingPage.css') }}">
 
 </head>
 
@@ -17,17 +17,17 @@
         <div class="container-fluid px-4">
 
             <a class="navbar-brand" href="#">
-                <img src="images/sanagustinlogo.png" style="width: 50px;" alt="">
+                <img src="{{ asset('images/sanagustinlogo.png') }}" style="width: 50px;" alt="">
                 San Agustin E-Services
             </a>
             <div class="d-flex gap-3 align-items-center">
                 <button class="btn-menu" id="menuBtn">
-                    <img src="images/menu.png" style="width: 10px;" alt="">Menu
+                    <img src="{{ asset('images/menu.png') }}" style="width: 10px;" alt="">Menu
                 </button>
                 <div class="user-dropdown">
                     <div class="dropdown">
                         <button class="user-profile-btn" data-bs-toggle="dropdown">
-                            <span class="user-name">Karen Gonzales</span>
+                            <span class="user-name">{{ session('user_name') }}</span>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end">
                             <li><a class="dropdown-item" href="#">View Profile</a></li>
@@ -35,7 +35,14 @@
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="dropdown-item" href="#">Log Out</a></li>
+                            <li>
+                                <form id="logoutForm" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                    @csrf
+                                </form>
+                                <a class="dropdown-item" href="#" onclick="confirmLogout(event)">
+                                    Log Out
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -52,7 +59,9 @@
             <li><a href="#">Home</a></li>
             <li><a href="#">Barangay ID Application</a></li>
             <li><a href="#">Barangay Clearance</a></li>
-            <li><a href="#">Certificates Request</a></li>
+            <li><a href="#">Certificate Of Indigency</a></li>
+            <li><a href="#">Certificate Of Residency</a></li>
+            <li><a href="#">First Time Job Seeker</a></li>
             <li><a href="#">Business Permit</a></li>
             <li><a href="#">Blotter Report</a></li>
             <li><a href="#">Household Info</a></li>
@@ -67,16 +76,15 @@
     <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
             <div class="carousel-item active">
-                <img src="images/home.JPG" class="d-block w-100" alt="...">
+                <img src="{{ asset('images/home.JPG') }}" class="d-block w-100" alt="...">
                 <div class="carousel-overlay">
                     <div class="carousel-text">
                         <h1>Welcome to Barangay San Agustin</h1>
-                        <p>E-Services System</p>
                     </div>
                 </div>
             </div>
             <div class="carousel-item">
-                <img src="images/home1.jpg" class="d-block w-100" alt="...">
+                <img src="{{ asset('images/home1.jpg') }}" class="d-block w-100" alt="...">
                 <div class="carousel-overlay">
                     <div class="carousel-text">
                         <h1>Serving Our Community</h1>
@@ -85,7 +93,7 @@
                 </div>
             </div>
             <div class="carousel-item">
-                <img src="images/home2.JPG" class="d-block w-100" alt="...">
+                <img src="{{ asset('images/home2.JPG') }}" class="d-block w-100" alt="...">
                 <div class="carousel-overlay">
                     <div class="carousel-text">
                         <h1>Your Trusted Partner</h1>
@@ -103,40 +111,53 @@
             <div class="row g-4">
                 <div class="col-md-6 col-lg-4">
                     <div class="service-card">
-                        <img src="images/card.png" style="width: 120px;" alt="">
+                        <img src="{{ asset('images/card.png') }}" style="width: 120px;" alt="">
                         <h5 class="service-title">Barangay ID Application</h5>
                     </div>
                 </div>
                 <div class="col-md-6 col-lg-4">
                     <div class="service-card">
-                        <img src="images/file.png" style="width: 120px;" alt="">
-                        <h5 class="service-title mt-2">Barangay Clearance Request</h5>
+                        <img src="{{ asset('images/file.png') }}" style="width: 120px;" alt="">
+                        <h5 class="service-title mt-2">Barangay Clearance</h5>
                     </div>
                 </div>
                 <div class="col-md-6 col-lg-4">
                     <div class="service-card">
-                        <img src="images/policy.png" style="width: 120px;" alt="">
-                        <h5 class="service-title">Barangay Certificates</h5>
+                        <img src="{{ asset('images/real-estate.png') }}" style="width: 120px;" alt="">
+                        <h5 class="service-title">Certificate of Residency</h5>
+                    </div>
+                </div>
+                 <div class="col-md-6 col-lg-4">    
+                    <div class="service-card">
+                        <img src="{{ asset('images/gloves.png') }}" style="width: 120px;" alt="">
+                        <h5 class="service-title">Certificate of Indigency</h5>
+                    </div>
+                </div>
+                 <div class="col-md-6 col-lg-4">
+                    <div class="service-card">
+                        <img src="{{ asset('images/jobseeker.png') }}" style="width: 120px;" alt="">
+                        <h5 class="service-title">First Time Job Seeker</h5>
                     </div>
                 </div>
                 <div class="col-md-6 col-lg-4">
                     <div class="service-card">
-                        <img src="images/approval.png" style="width: 120px;" alt="">
+                        <img src="{{ asset('images/approval.png') }}" style="width: 120px;" alt="">
                         <h5 class="service-title">Business Permit</h5>
                     </div>
                 </div>
                 <div class="col-md-6 col-lg-4">
                     <div class="service-card">
-                        <img src="images/report.png" style="width: 120px;" alt="">
+                        <img src="{{ asset('images/report.png') }}" style="width: 120px;" alt="">
                         <h5 class="service-title">Blotter Report</h5>
                     </div>
                 </div>
                 <div class="col-md-6 col-lg-4">
                     <div class="service-card">
-                        <img src="images/family.png" style="width: 120px;" alt="">
+                        <img src="{{ asset('images/family.png') }}" style="width: 120px;" alt="">
                         <h5 class="service-title">Household Information</h5>
                     </div>
                 </div>
+                
             </div>
         </div>
     </section>
@@ -153,20 +174,26 @@
             <div class="footer-contact">
                 <h3>Contact Us</h3>
                 <div class="contact-item">
-                    <img src="images/whitepin.png" style="width: 20px;" alt="">
-                    <span>Barangay San Agustin, Metro Manila, Philippines</span>
+                    <img src="{{ asset('images/whitepin.png') }}" style="width: 20px;" alt="">
+                    <span>Patnubay St. Cor. Katarungan Saint Francis / Blueville Subdivision, Barangay San Agustin, Novaliches, Quezon City.</span>
                 </div>
                 <div class="contact-item">
-                    <img src="images/whitephone.png" style="width: 20px;" alt="">
-                    <a href="tel:+639123456789">(+63) 912-345-6789</a>
+                    <img src="{{ asset('images/whitephone.png') }}" style="width: 20px;" alt="">
+                    <span>8936-1295 ADMIN(OFFICE) / 09190647974 (BPSO)</span>
+                    
                 </div>
                 <div class="contact-item">
-                    <img src="images/whiteemail.png" style="width: 20px;" alt="">
-                    <a href="mailto:info@sanagustin.gov.ph">info@sanagustin.gov.ph</a>
+                    <img src="{{ asset('images/whiteemail.png') }}" style="width: 20px;" alt="">
+                    <span>brgysanagustin13@gmail.com</span>
+                   
                 </div>
                 <div class="contact-item">
-                    <img src="images/time.png" style="width: 20px;" alt="">
+                    <img src="{{ asset('images/time.png') }}" style="width: 20px;" alt="">
                     <span>Mon - Fri: 8:00 AM - 5:00 PM</span>
+                </div>
+                <div class="contact-item">
+                    <img src="{{ asset('images/whitefacebook.png') }}" style="width: 20px;" alt="">
+                    <span>Pamahalaang Brgy. ng San Agustin</span>
                 </div>
             </div>
         </div>
@@ -212,12 +239,20 @@
 
         const serviceCards = document.querySelectorAll('.service-card');
         serviceCards.forEach(card => {
-            card.addEventListener('click', function () {
+            card.addEventListener('click', function() {
                 const serviceName = this.querySelector('.service-title').textContent;
                 console.log('Clicked service:', serviceName);
 
             });
         });
+
+        function confirmLogout(event) {
+            event.preventDefault();
+
+            if (confirm('Are you sure you want to logout?')) {
+                document.getElementById('logoutForm').submit();
+            }
+        }
     </script>
 </body>
 

@@ -319,10 +319,10 @@
         function updateTabStates() {
             tabs.forEach((tab, index) => {
                 if (index <= currentTab) {
-                    // Current and previous tabs are enabled
+
                     tab.classList.remove('disabled');
                 } else {
-                    // Future tabs are disabled
+
                     tab.classList.add('disabled');
                 }
             });
@@ -340,13 +340,13 @@
             submitBtn.style.display = n === tabContents.length - 1 ? 'block' : 'none';
 
             currentTab = n;
-            updateTabStates(); // Update tab states after changing tab
+            updateTabStates();
         }
 
         tabs.forEach((tab, index) => {
             tab.addEventListener('click', (e) => {
                 e.preventDefault();
-                // Only allow clicking on current or previous tabs
+
                 if (index <= currentTab) {
                     showTab(index);
                 }
@@ -398,10 +398,11 @@
         });
 
 
+    
         document.getElementById('registrationForm').addEventListener('submit', async function(e) {
             e.preventDefault();
 
-            // Validate all tabs before submission
+        
             let allValid = true;
             for (let i = 0; i < tabContents.length; i++) {
                 currentTab = i;
@@ -416,7 +417,7 @@
                 return;
             }
 
-            // Check password match
+      
             const passwordField = document.getElementById('password');
             const confirmPasswordField = document.getElementById('confirmPassword');
             const mismatchMessage = document.getElementById('passwordMismatchMessage');
@@ -424,11 +425,10 @@
             if (passwordField.value !== confirmPasswordField.value) {
                 mismatchMessage.style.display = 'block';
                 confirmPasswordField.classList.add('is-invalid');
-                showTab(2); // Go to account tab
+                showTab(2);
                 return;
             }
 
-            // Create FormData from the form
             const formData = new FormData(this);
 
             submitBtn.disabled = true;
@@ -448,15 +448,17 @@
 
                 if (!response.ok) {
                     if (result.errors) {
-                        // Show validation errors
                         let firstErrorTab = null;
+                        let errorMessages = [];
 
                         for (let field in result.errors) {
                             const element = document.getElementById(field);
+
+                            errorMessages.push(...result.errors[field]);
+
                             if (element) {
                                 element.classList.add('is-invalid');
 
-                                // Find which tab this field is in
                                 if (!firstErrorTab) {
                                     const tabPane = element.closest('.tab-pane');
                                     if (tabPane) {
@@ -465,27 +467,33 @@
                                     }
                                 }
                             }
+
+                        
+                            if (field === 'username') {
+                                showTab(2); 
+                                alert('Username already taken. Please choose a different username.');
+                                return;
+                            }
                         }
 
-                        // Show the first tab with errors
                         if (firstErrorTab !== null) {
                             showTab(firstErrorTab);
                         }
 
-                        alert('Please correct the errors in the form.');
+                       
+                        if (errorMessages.length > 0) {
+                            alert('Please correct the following errors:\n\n' + errorMessages.join('\n'));
+                        }
                     } else {
                         alert(result.message || 'Registration failed. Please try again.');
                     }
                     return;
                 }
 
-                // Registration successful
                 alert(result.message);
 
-                // Clear the form
                 this.reset();
 
-                // Clear captured image
                 const capturedImage = document.getElementById('capturedImage');
                 const profilePictureData = document.getElementById('profilePictureData');
                 if (capturedImage) {
@@ -496,15 +504,12 @@
                     profilePictureData.value = '';
                 }
 
-                // Clear any validation error styles
                 document.querySelectorAll('.is-invalid').forEach(el => {
                     el.classList.remove('is-invalid');
                 });
 
-                // Reset to first tab
                 showTab(0);
 
-                // Redirect to login page after a short delay
                 setTimeout(() => {
                     window.location.href = "{{ route('login') }}";
                 }, 1500);
@@ -517,6 +522,7 @@
                 submitBtn.textContent = 'Register';
             }
         });
+
         showTab(0);
         updateTabStates();
 

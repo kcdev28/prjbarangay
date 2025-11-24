@@ -4,55 +4,54 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Barangay Officials & Staff - Barangay Admin Dashboard</title>
-         <link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap.min.css') }}">
     <script src="{{ asset('bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-     <link rel="stylesheet" href="{{ asset('css/officials.css') }}">
-
+    <link rel="stylesheet" href="{{ asset('css/officials.css') }}">
 </head>
 <body>
     <div class="wrapper">
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-header">
                 <div class="sidebar-logo">
-                    <img src="images/sanagustinlogo.png" alt="Logo">
+                    <img src="{{ asset('images/sanagustinlogo.png') }}" alt="Logo">
                 </div>
-                <div class="brand-name">San Agustin</div>
+                <div class="brand-name">Brgy. San Agustin</div>
             </div>
 
             <ul class="sidebar-menu">
                 <li>
-                    <a href="dashboard.blade.php">
-                        <img src="icons/data-report.png" alt="Dashboard">
+                    <a href="{{ route('admin.dashboard') }}">
+                        <img src="{{ asset('icons/data-report.png') }}" alt="Dashboard">
                         <span>Dashboard</span>
                     </a>
                 </li>
                 <li>
-                    <a href="residents.blade.php">
-                        <img src="icons/crowd-of-users.png" alt="Resident Record">
+                    <a href="{{ route('admin.residents') }}">
+                        <img src="{{ asset('icons/crowd-of-users.png') }}" alt="Resident Record">
                         <span>Resident Record</span>
                     </a>
                 </li>
                 <li>
-                    <a href="officials.blade.php" class="active">
-                        <img src="icons/group.png" alt="Barangay Officials & Staff">
+                    <a href="{{ route('admin.officials') }}" class="active">
+                        <img src="{{ asset('icons/group.png') }}" alt="Barangay Officials & Staff">
                         <span>Barangay Officials & Staff</span>
                     </a>
                 </li>
                 <li>
                     <a href="#">
-                        <img src="icons/house.png" alt="Household">
+                        <img src="{{ asset('icons/house.png') }}" alt="Household">
                         <span>Household</span>
                     </a>
                 </li>
                 <li>
                     <a href="#">
-                        <img src="icons/resolution.png" alt="Blotter Records">
+                        <img src="{{ asset('icons/resolution.png') }}" alt="Blotter Records">
                         <span>Blotter Records</span>
                     </a>
                 </li>
                 <li>
                     <a href="#" class="dropdown-toggle">
-                        <img src="icons/quality.png" alt="Certificates">
+                        <img src="{{ asset('icons/quality.png') }}" alt="Certificates">
                         <span>Certificates</span>
                     </a>
                     <ul class="submenu" id="certificatesMenu">
@@ -75,39 +74,42 @@
                 </li>
                 <li>
                     <a href="#">
-                        <img src="icons/custom-clearance.png" alt="Clearance">
+                        <img src="{{ asset('icons/custom-clearance.png') }}" alt="Clearance">
                         <span>Clearance</span>
                     </a>
                 </li>
                 <li>
                     <a href="#">
-                        <img src="icons/advertising.png" alt="Announcement">
+                        <img src="{{ asset('icons/advertising.png') }}" alt="Announcement">
                         <span>Announcement</span>
                     </a>
                 </li>
                 <li>
                     <a href="#">
-                        <img src="icons/audit.png" alt="Audit Trail">
+                        <img src="{{ asset('icons/audit.png') }}" alt="Audit Trail">
                         <span>Audit Trail</span>
                     </a>
                 </li>
                 <li>
                     <a href="#">
-                        <img src="icons/web-settings.png" alt="Maintenance">
+                        <img src="{{ asset('icons/web-settings.png') }}" alt="Maintenance">
                         <span>Maintenance</span>
                     </a>
                 </li>
                 <li>
                     <a href="#">
-                        <img src="icons/self-employed.png" alt="User Accounts">
+                        <img src="{{ asset('icons/self-employed.png') }}" alt="User Accounts">
                         <span>User Accounts</span>
                     </a>
                 </li>
             </ul>
 
             <div class="logout-section">
-                <button class="logout-btn">
-                    <img src="icons/logout.png" alt="Logout">
+                <form id="logoutForm" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
+                <button class="logout-btn" onclick="confirmLogout(event)">
+                    <img src="{{ asset('icons/logout.png') }}" alt="Logout">
                     <span>Logout</span>
                 </button>
             </div>
@@ -116,7 +118,7 @@
         <div class="main-content">
             <header class="header">
                 <div>
-                    <div class="user-name" id="userName">Juan Dela Cruz</div>
+                    <div class="user-name" id="userName">{{ session('user_name') }}</div>
                     <div class="date-time" id="dateTime"></div>
                 </div>
             </header>
@@ -284,8 +286,19 @@
 
         function deleteOfficial(officialId) {
             if (confirm('Are you sure you want to delete this official record?')) {
-                mockOfficials = mockOfficials.filter(official => official.id !== officialId);
+                const index = mockOfficials.findIndex(official => official.id === officialId);
+                if (index > -1) {
+                    mockOfficials.splice(index, 1);
+                }
                 applyFilters();
+            }
+        }
+
+        function confirmLogout(event) {
+            event.preventDefault();
+
+            if (confirm('Are you sure you want to logout?')) {
+                document.getElementById('logoutForm').submit();
             }
         }
 

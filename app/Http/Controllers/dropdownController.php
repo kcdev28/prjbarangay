@@ -19,4 +19,18 @@ class dropdownController extends Controller
 
         return view('registerResident', compact('areas', 'civilStatuses', 'religions', 'specialStatuses'));
     }
+
+    public function adminCreate()
+    {
+        $areas = area::all();
+        $civilStatuses = civil::all();
+        $religions = religion::all();
+        $specialStatuses = special::all();
+
+        return view('residents', compact('areas', 'civilStatuses', 'religions', 'specialStatuses'));
+    }
+
+
+
+   
 }

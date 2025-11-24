@@ -23,24 +23,27 @@
                 <h2 class="text-center">Log In</h2>
 
 
-                <form id="loginForm">
+                <form id="loginForm" method="POST" action="{{ route('login.submit') }}">
+                    @csrf
                     <div class="form-group">
-                        <label for="email">Email Address</label>
-                        <input type="email" class="form-control" id="email" placeholder="Enter your email" required>
+                        <label>Email Address</label>
+                        <input type="text" name="username" class="form-control" required>
                     </div>
 
-                    <div class="form-group password-group">
-                        <label for="password">Password</label>
-                        <input type="password" class="form-control" id="password" placeholder="Enter your password"
-                            required>
-                        <div class="show-password-wrapper">
-                            <input type="checkbox" id="showPassword">
-                            <label for="showPassword">Show Password</label>
-                        </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" name="password" class="form-control" required>
                     </div>
 
-                    <button type="submit" id="submit" class="btn-login" onclick="">Sign In</button>
+                    
+
+                    <button type="submit" class="btn-login">Sign In</button>
                 </form>
+
+                @if ($errors->any())
+                <p style="color:red;" class="text-center">{{ $errors->first() }}</p>
+                @endif
+
 
                 <div class="register-link">
                     Don't have an account? <a href="{{ route('register') }}">Register Now</a>
@@ -58,9 +61,5 @@
     showPasswordCheckbox.addEventListener('change', function() {
         const type = this.checked ? 'text' : 'password';
         passwordInput.setAttribute('type', type);
-    });
-
-    document.getElementById('submit').addEventListener('click', function() {
-        window.location.href = 'landingPage.blade.php';
     });
 </script>

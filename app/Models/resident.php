@@ -6,9 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class resident extends Model
 {
-    protected $table = 'tbl_residents'; 
-    public $timestamps = true;
-    const UPDATED_AT = null;
+    protected $table = 'tbl_residents';
+    protected $primaryKey = 'residentID';
+    public $timestamps = false;
+
     protected $fillable = [
         'firstname',
         'middlename',
@@ -34,6 +35,27 @@ class resident extends Model
         'verify_image',
         'username',
         'password',
-        'status',
+        'status'
     ];
+
+    // Define relationships
+    public function civilStatus()
+    {
+        return $this->belongsTo(civil::class, 'civil_no', 'civilID');
+    }
+
+    public function religion()
+    {
+        return $this->belongsTo(religion::class, 'religion_no', 'religionID');
+    }
+
+    public function specialGroup()
+    {
+        return $this->belongsTo(special::class, 'special_group_no', 'specialID');
+    }
+
+    public function area()
+    {
+        return $this->belongsTo(area::class, 'area_no', 'areaID');
+    }
 }

@@ -151,12 +151,96 @@ body {
     flex-direction: column;
 }
 
+/* Add these styles to your existing residents.css */
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.page-title {
+    margin: 0;
+}
+
+.section-title {
+    font-weight: 600;
+    color: #333;
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 5px;
+    margin-bottom: 15px;
+}
+
+.modal-body {
+    max-height: 70vh;
+    overflow-y: auto;
+}
+
+.img-thumbnail {
+    border-radius: 8px;
+}
+
+.text-danger {
+    color: #dc3545;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    border-color: #6c757d;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+    border-color: #545b62;
+}
+
+.form-label {
+    font-weight: 500;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.form-control, .form-select {
+    border-radius: 5px;
+    border: 1px solid #ced4da;
+    padding: 8px 12px;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.modal-lg {
+    max-width: 900px;
+}
+
 .header {
     background: white;
     padding: 20px 30px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     display: flex;
-    justify-content: flex-end;
+    justify-content: flex-start;
     align-items: center;
     position: sticky;
     top: 0;
